@@ -1,4 +1,4 @@
-import fileController from "../controllers/fileController";
+import fileController from "../controllers/fileController.js";
 import express from "express";
 
 const filesRouter = express.Router();

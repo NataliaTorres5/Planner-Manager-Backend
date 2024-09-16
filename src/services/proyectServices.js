@@ -1,4 +1,4 @@
-import proyectModel from "../models/proyectModel";
+import proyectModel from "../models/proyectModel.js";
 
 const proyectServices = {
 
@@ -26,8 +26,11 @@ const proyectServices = {
 
     async createOneProyect (data) {
         try{
-            let newProyect= await proyectModel.create({data})
+            console.log(data)
+            let newProyect= await proyectModel.create(data)
             if(!newProyect) throw new Error(`The Proyect couldn't be created`)
+                console.log(newProyect)
+            return newProyect
         }catch (error){
             return error 
         }

@@ -1,4 +1,4 @@
-import fileModel from "../models/fileModel"
+import fileModel from "../models/fileModel.js"
 
 const fileServices = {
 

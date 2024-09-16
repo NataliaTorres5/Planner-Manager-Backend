@@ -20,6 +20,7 @@ const userController = {
             res.status(400).json({ error })
         }
     },
+    
     async getOneUserByName(req, res) {
         try {
             
@@ -54,6 +55,8 @@ const userController = {
     },
     async signInUser( req, res ){
         try {
+            const data=req.body
+            const  emailInUse = await userServices.findOne({email: data.email})
             let user = await userModel.findOne( { email:req.body.email } )
             if(!user) throw new Error(`Email isn't registed`)
             user.logged = true
@@ -64,14 +67,22 @@ const userController = {
         }
     },
 
-    signUpUser( req, res ){
+    async signUpUser( req, res ){
        
         try {
             const data = req.body
-            const emailInUse =  userModel.findOne({email: data.email})
+            const emailInUse = await userServices.findOne({email: data.email})
             if (emailInUse) throw new Error ("Email already exists")
 
-                res.json
+                bcrypt.hashSync(data.password, 10)
+
+                const passwordHash = bcrypt.hashSync(data.password, 10)
+
+                data.password = passwordHash
+
+                const newUser = await userServices.createOneUser( data )
+
+                res.status(201).json( {message: 'Sign up successful', newUser} )
         } catch (error) {
             
         }

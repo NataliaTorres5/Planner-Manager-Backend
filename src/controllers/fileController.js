@@ -1,8 +1,9 @@
-import fileServices from "../services/fileServices";
+import fileServices from "../services/fileServices.js";
+
 const fileController = {
   async getAllFiles(req, res) {
     try {
-      let allComments = await fileController.getAllFiles();
+      let allFiles = await fileServices.getAllFiles();
       res.status().json({ allFiles });
     } catch (error) {
       res.status(400).json({ error });
@@ -10,15 +11,15 @@ const fileController = {
   },
   async getOneById(req, res) {
     try {
-      let comment = await fileController.getOneById(req.params.id);
-      res.status(200).json({ comment });
+      let file = await fileServices.getOneById(req.params.id);
+      res.status(200).json({ file });
     } catch (error) {
       res.status(400).json({ error });
     }
   },
   async createOneFile (req, res){
     try {
-        let newFile = await fileController.createOneFile (req.body)
+        let newFile = await fileServices.createOneFile (req.body)
         res.status(201).json({newFile});
     } catch (error) {
         res.status(400).json({ error });
@@ -28,8 +29,8 @@ const fileController = {
     async deleteOneFile (req, res){
 
         try {
-            let comment = await fileController.deleteOneFile(req.param.id)
-            res.status(200).json({comment});
+            let file = await fileServices.deleteOneFile(req.param.id)
+            res.status(200).json({file});
         } catch (error) {
             res.status(400).json({ error });
         }
@@ -39,8 +40,8 @@ const fileController = {
 
         try {
             
-            let comment = await fileController.updateOneFile(req.param.id, req.body, {new:true})
-            res.status(200).json({comment});
+            let file = await fileServices.updateOneFile(req.param.id, req.body, {new:true})
+            res.status(200).json({file});
         } catch (error) {
             res.status(400).json({ error });
         }

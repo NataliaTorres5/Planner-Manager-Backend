@@ -3,8 +3,8 @@ import proyectServices from "../services/proyectServices.js";
 const proyectController = {
   async getAllProyects(req, res) {
     try {
-      let allComments = await proyectServices.getAllProyects();
-      res.status().json({ allComments });
+      let allProyect = await proyectServices.getAllProyects();
+      res.status().json({ allProyect });
     } catch (error) {
       res.status(400).json({ error });
     }
@@ -17,30 +17,32 @@ const proyectController = {
       res.status(400).json({ error });
     }
   },
-  async createOneComment(req, res){
+  async createOneProyect(req, res){
     try {
-        let newProyect = await proyectServices.createOneComment(req.body)
+      console.log(req.body)
+        let newProyect = await proyectServices.createOneProyect(req.body)
+        console.log(newProyect)
         res.status(201).json({newProyect});
     } catch (error) {
         res.status(400).json({ error });
     }
         
     }, 
-    async deleteOneComment (req, res){
+    async deleteOneProyect (req, res){
 
         try {
-            let proyect = await cproyectServices.deleteOneComment(req.param.id)
+            let proyect = await cproyectServices.deleteOneProyect(req.param.id)
             res.status(200).json({proyect});
         } catch (error) {
             res.status(400).json({ error });
         }
 
     }, 
-    async updateOneComment (req, res){
+    async updateOneProyect (req, res){
 
         try {
             
-            let proyect = await proyectServices.updateOneComment(req.param.id, req.body, {new:true})
+            let proyect = await proyectServices.updateOneProyect(req.param.id, req.body, {new:true})
             res.status(200).json({proyect});
         } catch (error) {
             res.status(400).json({ error });

@@ -3,8 +3,11 @@ import taskController from "../controllers/taskController.js";
 
 const taskRouter = express.Router();
 
-taskRouter.get("/", taskController.getAllProyects ) //endpoint
+taskRouter.get("/", taskController.getAllTasks ) //endpoint
 taskRouter.get("/:id", taskController.getOneById)
-taskRouter.post("/", taskController.createOneComment)
-taskRouter.put("/:id", taskController.updateOneComment) 
-taskRouter.delete("/:id", taskController.deleteOneComment)
+taskRouter.post("/", taskController.createOneTask)
+taskRouter.put("/:id", taskController.updateOneTask) 
+taskRouter.delete("/:id", taskController.deleteOneTask)
+
+
+export default taskRouter

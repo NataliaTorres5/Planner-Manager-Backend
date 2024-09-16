@@ -10,5 +10,5 @@ const  fileSchema = new Schema({
 
 })
 
-const fileModel = model('File', commentSchema)
+const fileModel = model('File', fileSchema )
 export default fileModel

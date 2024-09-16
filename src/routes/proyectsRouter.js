@@ -5,9 +5,9 @@ const proyectsRouter = express.Router();
 
 proyectsRouter.get("/", proyectsController.getAllProyects ) //endpoint
 proyectsRouter.get("/:id", proyectsController.getOneById)
-proyectsRouter.post("/", proyectsController.createOneComment)
-proyectsRouter.put("/:id", proyectsController.updateOneComment) 
-proyectsRouter.delete("/:id", proyectsController.deleteOneComment)
+proyectsRouter.post("/", proyectsController.createOneProyect)
+proyectsRouter.put("/:id", proyectsController.updateOneProyect) 
+proyectsRouter.delete("/:id", proyectsController.deleteOneProyect)
 
 
 export default proyectsRouter 
