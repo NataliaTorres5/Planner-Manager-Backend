@@ -7,8 +7,7 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     proyect: [{ type: Schema.Types.ObjectId, ref: 'proyect' }],
     role: { type: String, enum: ['admin', 'user', 'organizer'], default: 'user' },
-    logged: { type:Boolean, required: true, default:false }
 })
 
-const userModel = model('User', userSchema)
+const userModel = model('user', userSchema)
 export default userModel

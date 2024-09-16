@@ -1,5 +1,6 @@
 import userServices from '../services/userServices.js'
     import userModel from '../models/userModel.js'
+    import bcrypt from 'bcrypt'
 
 
 const userController = {
@@ -51,7 +52,7 @@ const userController = {
             res.status(400).json({ error })
         }
     },
-    async logInUser( req, res ){
+    async signInUser( req, res ){
         try {
             let user = await userModel.findOne( { email:req.body.email } )
             if(!user) throw new Error(`Email isn't registed`)
@@ -60,6 +61,19 @@ const userController = {
             res.status(200).json( {message: 'Log in successful', user} )
         } catch (error) {
             res.status(400).json({error})
+        }
+    },
+
+    signUpUser( req, res ){
+       
+        try {
+            const data = req.body
+            const emailInUse =  userModel.findOne({email: data.email})
+            if (emailInUse) throw new Error ("Email already exists")
+
+                res.json
+        } catch (error) {
+            
         }
     },
     async LogOutUser(req, res){
