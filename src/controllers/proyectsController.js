@@ -1,55 +1,56 @@
 import proyectServices from "../services/proyectServices.js";
+import catched from "../utils/catched.js";
+import httpResponse from "../utils/httpResponse.js";
 
 const proyectController = {
   async getAllProyects(req, res) {
-    try {
-      let allProyect = await proyectServices.getAllProyects();
-      res.status().json({ allProyect });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    let allProyect = await proyectServices.getAllproyects();
+    httpResponse(res, 200, allProyect);
   },
   async getOneById(req, res) {
-    try {
-      let proyect = await proyectServices.getOneById(req.params.id);
-      res.status(200).json({ proyect });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    let proyect = await proyectServices.getOneById(req.params.id);
+    httpResponse(res, 200, proyect);
   },
-  async createOneProyect(req, res){
-    try {
-      console.log(req.body)
-        let newProyect = await proyectServices.createOneProyect(req.body)
-        console.log(newProyect)
-        res.status(201).json({newProyect});
-    } catch (error) {
-        res.status(400).json({ error });
-    }
-        
-    }, 
-    async deleteOneProyect (req, res){
+  async createOneProyect(req, res) {
+    console.log(req.body);
+    let newProyect = await proyectServices.createOneProyect(req.body);
+    console.log(newProyect);
+    httpResponse(res, 200, newProyect);
+  },
+  async deleteOneProyect(req, res) {
+    let proyect = await proyectServices.deleteOneProyect(req.param.id);
+    httpResponse(res, 200, proyect);
+  },
+  async updateOneProyect(req, res) {
+    let proyect = await proyectServices.updateOneProyect(
+      req.param.id,
+      req.body,
+      { new: true }
+    );
+    httpResponse(res, 200, proyect);
+  },
 
-        try {
-            let proyect = await cproyectServices.deleteOneProyect(req.param.id)
-            res.status(200).json({proyect});
-        } catch (error) {
-            res.status(400).json({ error });
-        }
+  
 
-    }, 
-    async updateOneProyect (req, res){
+  async getByUser(req, res) {
+    const userOwner = req.params.userOwner;
+    const proyect = await proyectServices.getByUser(userOwner);
+    httpResponse(res, 200, proyect);
 
-        try {
-            
-            let proyect = await proyectServices.updateOneProyect(req.param.id, req.body, {new:true})
-            res.status(200).json({proyect});
-        } catch (error) {
-            res.status(400).json({ error });
-        }
-    }
+  }, 
+
+  async getById(req, res){
+    const idUser = req.params.id
+    const user = await proyectServices.getById(idUser);
+    httpResponse(res, 200, user);
 
   }
+};
 
-
-export default proyectController
+export default {
+  getAllProyects: catched(proyectController.getAllProyects),
+  getOneById: catched(proyectController.getOneById),
+  createOneProyect: catched(proyectController.createOneProyect),
+  deleteOneProyect: catched(proyectController.deleteOneProyect),
+  updateOneProyect: catched(proyectController.updateOneProyect),
+};

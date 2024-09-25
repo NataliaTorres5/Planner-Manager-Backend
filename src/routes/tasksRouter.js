@@ -8,6 +8,8 @@ taskRouter.get("/:id", taskController.getOneById)
 taskRouter.post("/", taskController.createOneTask)
 taskRouter.put("/:id", taskController.updateOneTask) 
 taskRouter.delete("/:id", taskController.deleteOneTask)
+taskRouter.get("/:proyect", taskController.getByProyect)
+taskRouter.get("/:proyect", taskController.getById)
 
 
 export default taskRouter

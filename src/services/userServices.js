@@ -1,6 +1,8 @@
 import userModel from '../models/userModel.js'
+import bcrypt from "bcrypt";
 
 const userServices = {
+    /*
     async getAllUsers() {
         try {
             let allUsers = await userModel.find()
@@ -54,6 +56,30 @@ const userServices = {
         } catch (error) {
             return error
         }
+    },
+    */
+   async getAllUsers() {
+    return await userModel.find()
+
+   },
+
+    async getByEmail (data) {
+        return await userModel.findOne({ email: data.email })
+    },
+
+    async deleteUser(id){
+        return await userModel.findByIdAndDelete({_id: id,} )
+    },
+
+    async create(data){
+        const passwordHash = bcrypt.hashSync(data.password || "", 10);
+      data.password = passwordHash;
+      return  await userModel.create(data);
+
+    },
+    checkPassword(password, passwordHash){
+        return bcrypt.compareSync(password || "", passwordHash);
+
     }
 }
 

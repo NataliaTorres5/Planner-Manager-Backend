@@ -1,53 +1,55 @@
 import taskServices from "../services/taskServices.js";
+import catched from "../utils/catched.js";
+import customError from "../utils/customError.js";
+import httpResponse from "../utils/httpResponse.js";
 
 const taskController = {
   async getAllTasks(req, res) {
-    try {
-      let allComments = await taskServices .getAllTasks();
-      res.status().json({ allComments });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    let allComments = await taskServices.getAllTasks();
+    httpResponse(res, 200, allComments);
   },
   async getOneById(req, res) {
-    try {
-      let task = await taskServices .getOneById(req.params.id);
-      res.status(200).json({ task });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
+    let task = await taskServices.getOneById(req.params.id);
+    httpResponse(res, 200, task);
   },
-  async createOneTask(req, res){
-    try {
-        let newTask = await taskServices .createOneTask(req.body)
-        res.status(201).json({newTask});
-    } catch (error) {
-        res.status(400).json({ error });
-    }
-        
-    }, 
-    async deleteOneTask (req, res){
+  async createOneTask(req, res) {
+    let newTask = await taskServices.createOneTask(req.body);
+    httpResponse(res, 200, newTask);
+  },
+  async deleteOneTask(req, res) {
+    let task = await taskServices.deleteOneTask(req.param.id);
+    httpResponse(res, 200, task);
+  },
+  async updateOneTask(req, res) {
+    let task = await taskServices.updateOneTask(req.param.id, req.body, {
+      new: true,
+    });
+    httpResponse(res, 200, task);
+  },
 
-        try {
-            let proyect = await taskServices .deleteOneTask(req.param.id)
-            res.status(200).json({proyect});
-        } catch (error) {
-            res.status(400).json({ error });
-        }
+  async getById(id){ //desde relaciones
+    const getProyectById = req.params.proyect;
+    const proyect = await taskServices.getById(getProyectById);
+   
+    httpResponse(res, 200, proyect);
 
-    }, 
-    async updateOneTask (req, res){
+  },
 
-        try {
-            
-            let proyect = await taskServices .updateOneTask(req.param.id, req.body, {new:true})
-            res.status(200).json({proyect});
-        } catch (error) {
-            res.status(400).json({ error });
-        }
-    }
+  async getByProyect(req, res) {  //desde relaciones
+  const proyectId = req.params.proyect;
+  const tasks = await taskServices.getByProyect(proyectId);
+  if (!tasks) throw new customError("no tasks found", 404);
+  httpResponse(res, 200, tasks);
 
   }
+};
 
-
-export default taskController 
+export default {
+  getAllTasks: catched(taskController.getAllTasks),
+  getOneById: catched(taskController.getOneById),
+  createOneTask: catched(taskController.createOneTask),
+  deleteOneTask: catched(taskController.deleteOneTask),
+  updateOneTask: catched(taskController.updateOneTask),
+  getById: catched(taskController.getById),
+  getByProyect: catched(taskController.getByProyect),
+};

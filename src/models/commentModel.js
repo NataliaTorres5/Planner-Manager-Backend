@@ -1,11 +1,11 @@
 
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
 const  commentSchema = new Schema({
     user: [{ type: Schema.Types.ObjectId, ref: 'user' }],
     title: { type: String},
     text: { type: String, required: true },
-    proyects: { type: Schema.Types.ObjectId, ref: 'proyect' }
+    proyects: { type: Types.ObjectId, ref: 'proyect' }
 
 
 })

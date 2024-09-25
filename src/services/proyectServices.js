@@ -1,12 +1,16 @@
 import proyectModel from "../models/proyectModel.js";
+import customErrors from "../utils/customError.js";
+import validateObjectId from "../utils/validateObjectId.js";
 
 const proyectServices = {
 
     async getAllproyects() {
         try {
             let allproyects = await proyectModel.find()
+            console.log("algo", allproyects)
             return allproyects
         } catch (error) {
+            console.log(error)
             return error
         }
     },
@@ -32,7 +36,9 @@ const proyectServices = {
                 console.log(newProyect)
             return newProyect
         }catch (error){
+            console.log(error)
             return error 
+            
         }
     },
 
@@ -58,7 +64,27 @@ const proyectServices = {
             return(error)
             
         }
+    },
+
+
+    async getByUser(userId){
+        try {
+            const validateUser= validateObjectId(userId)
+            if(!validateUser) throw new customErrors("invalid userId",400 )
+            return await proyectModel.findById({user:userId})
+            
+        } catch (error) {
+            
+        }
+
+    },
+
+    async getUserById(userId){
+        const validateUser= validateObjectId(userId)
+        if(!validateUser) throw new customErrors("invalid userId",400 )
+        return await proyectModel.findById(userId)
     }
+    
     
 }
 
