@@ -1,7 +1,7 @@
 import joi from "joi";
 
 const taskSchema = joi.object ({
-
+    date: joi.date().required(),
 title: joi.string().alphanum().required(),
 text: joi.string().alphanum().required(),
 user: joi.string().pattern(objectIDPattern).required(),
