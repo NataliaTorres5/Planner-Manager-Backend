@@ -8,6 +8,10 @@ const commentSchema = joi.object({
     text: joi.string().alphanum().required(),
     proyects: joi.string().pattern(objectIDpattern).required(),
 
-})
+}).messages({
+    "string.alphanum": "{#label} field can only contain alphanumeric characters.",
+    "any.required": "{#label} is required.",
+    }) 
+    
 
 export default commentSchema
