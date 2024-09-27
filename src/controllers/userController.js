@@ -3,6 +3,10 @@ import customError from "../utils/customError.js";
 import catched from "../utils/catched.js"
 import httpResponse from "../utils/httpResponse.js";
 import userDTO from "../DTO/userDTO.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const userController = {
   /*async getAllUsers(req, res, next) {
@@ -66,7 +70,8 @@ const userController = {
       if (!emailInUse) throw new customError(`Email or password is not correct`, 400);
       const validPassword = userServices.checkPassword(data.password, emailInUse.password);
       if (!validPassword) throw new customError(`Email or password is not correct`, 409);
-      const userResponse = userDTO(emailInUse);
+      const token = jwt.sign({email:userResponse.email}, process.env.SECRET_KEY,{expiresIn:'2h'} );
+      const userResponse = userDTO(emailInUse, token);
       httpResponse(res, 200, userResponse)
   
 
@@ -77,8 +82,15 @@ const userController = {
       const emailInUse = await userServices.getByEmail(data.email);
       if (emailInUse) throw new customError("Email already exists", 409);
       const newUser = await userServices.create(data);
-      const userResponse = userDTO(newUser);
+      const token = jwt.sign({email:newUser.email}, process.env.SECRET_KEY,{expiresIn:'2h'} );
+      const userResponse = userDTO(newUser, token);
       httpResponse(res, 200, userResponse, "User created")
+  },
+
+  async signInwithToken(req,res){
+    const token = req.headers.authorization.split(" ")[1];
+    const userResponse = userDTO(req, token)
+    httpResponse(res, 200, userResponse, "User created")
   },
 
   async LogOutUser(req, res) {
@@ -115,5 +127,6 @@ export default  // userController
   logOutUser: catched(userController.LogOutUser),
   getAllUsers: catched(userController.getAllUsers),
   getUserByEmail: catched(userController.getByUserEmail),
-  deleteUser: catched(userController.deleteUser)
+  deleteUser: catched(userController.deleteUser),
+  signInwithToken: catched(userController.signInwithToken)
 } 
