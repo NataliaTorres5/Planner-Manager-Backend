@@ -2,7 +2,7 @@ import { model, Schema, Types } from "mongoose";
 
 const proyectSchema = new Schema ({
 
-    date: {type: Date, required: true},
+    date: {type: Date, default: Date.now},
     name: {type: String, required: true},
     description: {type: String, required: true},
     user: { type: Types.ObjectId, ref: "user" },

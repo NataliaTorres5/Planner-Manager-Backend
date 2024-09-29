@@ -12,11 +12,13 @@ const proyectController = {
     httpResponse(res, 200, proyect);
   },
   async createOneProyect(req, res) {
+    console.log(createOneProyect),
     console.log(req.body);
     let newProyect = await proyectServices.createOneProyect(req.body);
     console.log(newProyect);
     httpResponse(res, 200, newProyect);
   },
+  
   async deleteOneProyect(req, res) {
     let proyect = await proyectServices.deleteOneProyect(req.param.id);
     httpResponse(res, 200, proyect);
@@ -33,7 +35,7 @@ const proyectController = {
   
 
   async getByUser(req, res) {
-    const userOwner = req.params.userOwner;
+    const userOwner = req.params.user;
     const proyect = await proyectServices.getByUser(userOwner);
     httpResponse(res, 200, proyect);
 

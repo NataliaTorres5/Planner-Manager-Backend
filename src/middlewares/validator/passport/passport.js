@@ -1,8 +1,9 @@
-import passport  from "passport";
-import {Strategy, ExtractJwt} from "passport-jwt"
+
+import passport from "passport";
 import dotenv from "dotenv";
 import userServices from "../../../services/userServices.js";
 dotenv.config();
+import {Strategy, ExtractJwt} from "passport-jwt"
 
 
 
@@ -14,6 +15,7 @@ const options = {
 const authenticate = async (payload, done) => { //parecido al concepto de next
 
     try {
+        console.log(payload)
        const user = await  userServices.getByEmail(payload.email)
         if(!user) return done(null, false);
         return done(null, user);

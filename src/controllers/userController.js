@@ -88,6 +88,7 @@ const userController = {
   },
 
   async signInwithToken(req,res){
+    console.log(signInwithToken)
     const token = req.headers.authorization.split(" ")[1];
     const userResponse = userDTO(req, token)
     httpResponse(res, 200, userResponse, "User created")
