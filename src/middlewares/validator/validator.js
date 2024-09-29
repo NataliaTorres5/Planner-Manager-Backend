@@ -6,8 +6,10 @@ const validator = (schema) => {
         const validate = schema.validate(req.body, { abortEarly: true });
     if (validate.error) {
         throw new customError(validate.error.details[0].message, 409);
-        next()
+
+      
     }
+    next()
 }
 }
 
