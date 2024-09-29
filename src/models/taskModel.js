@@ -3,7 +3,7 @@ import { model, Schema, Types } from "mongoose";
 
 const  taskSchema = new Schema({
     user: [{ type: Types.ObjectId, ref: 'user' }],
-    creationDate: {type: Date, required: true},
+    date: {type: Date, default: Date.now},
     title: { type: String},
     text: { type: String, required: true },
     proyects: { type: Types.ObjectId, ref: 'proyect' },
