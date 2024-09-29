@@ -1,13 +1,13 @@
 import joi from "joi";
 
-const objectIdpattern = /^[0-9a-fA-F]{24}$/;
+
 const taskSchema = joi
   .object({
     date: joi.date().required(),
     title: joi.string().required(),
     text: joi.string().required(),
     user: joi.string().required(),
-    proyects: joi.string().pattern(objectIdpattern).required(),
+    proyects: joi.string().required(),
   })
   .messages({
     "string.alphanum":

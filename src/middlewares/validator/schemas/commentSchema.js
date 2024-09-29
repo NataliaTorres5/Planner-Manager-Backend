@@ -1,6 +1,6 @@
 import joi from "joi";
 
-const objectIDpattern = /^[0-9a-fA-F]{24}$/;
+
 
 const commentSchema = joi.object({
     user: joi.string().required(),
