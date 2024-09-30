@@ -5,6 +5,7 @@ import httpResponse from "../utils/httpResponse.js";
 import userDTO from "../DTO/userDTO.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { get } from "mongoose";
 
 dotenv.config();
 
@@ -70,8 +71,9 @@ const userController = {
       if (!emailInUse) throw new customError(`Email or password is not correct`, 400);
       const validPassword = userServices.checkPassword(data.password, emailInUse.password);
       if (!validPassword) throw new customError(`Email or password is not correct`, 409);
-      const token = jwt.sign({email:userResponse.email}, process.env.SECRET_KEY,{expiresIn:'2h'} );
+      const token = jwt.sign({email:userServices.email}, process.env.SECRET_KEY,{expiresIn:'2h'} );
       const userResponse = userDTO(emailInUse, token);
+      console.log(userResponse)
       httpResponse(res, 200, userResponse)
   
 
@@ -107,6 +109,13 @@ const userController = {
     httpResponse(res, 201, allUsers)
 
 },
+
+async getOneUserByID (req, res){
+
+  let userId = await userServices.getOneUserById(req.params.id)
+  httpResponse(res, 201, userId)
+  
+}, 
 async getByUserEmail(req, res){
    let userEmail = await userServices.getByEmail(data.email)
    httpResponse(res, 201, userEmail)
@@ -129,5 +138,6 @@ export default  // userController
   getAllUsers: catched(userController.getAllUsers),
   getUserByEmail: catched(userController.getByUserEmail),
   deleteUser: catched(userController.deleteUser),
-  signInwithToken: catched(userController.signInwithToken)
+  signInwithToken: catched(userController.signInwithToken), 
+  getOneUserById: catched(userController.getOneUserByID)
 } 

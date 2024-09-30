@@ -12,7 +12,6 @@ const proyectController = {
     httpResponse(res, 200, proyect);
   },
   async createOneProyect(req, res) {
-    console.log(createOneProyect),
     console.log(req.body);
     let newProyect = await proyectServices.createOneProyect(req.body);
     console.log(newProyect);

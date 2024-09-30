@@ -3,7 +3,7 @@ import joi from "joi";
 
 const taskSchema = joi
   .object({
-    date: joi.date().required(),
+    date: joi.date(),
     title: joi.string().required(),
     text: joi.string().required(),
     user: joi.string().required(),

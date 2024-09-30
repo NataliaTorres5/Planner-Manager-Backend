@@ -10,7 +10,7 @@ taskRouter.post("/", validator (taskSchema),  taskController.createOneTask)
 taskRouter.put("/:id", taskController.updateOneTask) 
 taskRouter.delete("/:id", taskController.deleteOneTask)
 taskRouter.get("/:proyect", taskController.getByProyect)
-taskRouter.get("/:proyect", taskController.getById)
+taskRouter.get("/:proyect/", taskController.getById)
 
 
 export default taskRouter

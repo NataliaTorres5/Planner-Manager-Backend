@@ -23,9 +23,11 @@ const taskServices = {
   },
 
   async createOneTask(data) {
+    console.log(data)
     try {
-      let newTask = await taskModel.create({ data });
+      let newTask = await taskModel.create(data);
       if (!newTask) throw new Error(`The task couldn't be created`);
+      return newTask;
     } catch (error) {
         throw new customError(error.message, 400);
     }

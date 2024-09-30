@@ -1,3 +1,4 @@
+import { get } from 'mongoose';
 import userModel from '../models/userModel.js'
 import bcrypt from "bcrypt";
 
@@ -61,6 +62,11 @@ const userServices = {
    async getAllUsers() {
     return await userModel.find()
 
+   },
+
+   async getOneUserById(id) {
+
+    return await userModel.findById({ _id: id })
    },
 
     async getByEmail (data) {
