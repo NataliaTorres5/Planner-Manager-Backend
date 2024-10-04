@@ -11,6 +11,7 @@ proyectsRouter.get("/:id", proyectsController.getOneById)
 proyectsRouter.post("/", validator (proyectSchema), proyectsController.createOneProyect)
 proyectsRouter.put("/:id", proyectsController.updateOneProyect) 
 proyectsRouter.delete("/:id", proyectsController.deleteOneProyect)
+proyectsRouter.get("/two/:id", proyectsController.getByUserId)
 
 
 export default proyectsRouter 

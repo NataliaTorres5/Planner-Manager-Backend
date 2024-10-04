@@ -45,6 +45,13 @@ const proyectController = {
     const user = await proyectServices.getById(idUser);
     httpResponse(res, 200, user);
 
+  }, 
+
+  async getByUserId(req, res) {
+    const userID = req.params.id;
+    const userId = await proyectServices.getbyUserId(userID); 
+    if (!userId ) throw new customError("this user has no proyects", 400);
+    httpResponse(res, 200, userId); 
   }
 };
 
@@ -54,4 +61,5 @@ export default {
   createOneProyect: catched(proyectController.createOneProyect),
   deleteOneProyect: catched(proyectController.deleteOneProyect),
   updateOneProyect: catched(proyectController.updateOneProyect),
+  getByUserId: catched(proyectController.getByUserId),
 };

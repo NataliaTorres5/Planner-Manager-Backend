@@ -55,7 +55,7 @@ const taskServices = {
   },
 
 
-async getByUserId (proyectId){
+async getByUserId (proyectId){  //is by proyect id not by user
   const validated = validateObjectId(proyectId)
   if(!validated) throw new customError("invalid Id", 400);
   return await taskModel.find({proyects: proyectId}).populate({path: "user", select: "-_id"}) 

@@ -35,7 +35,14 @@ const proyectServices = {
       if (!validateUser) throw new customErrors("invalid userId", 400);
       return await proyectModel.findById({ user: userId });
     
-  }
+  },
+
+  async getbyUserId(userId) {
+    const validatedUser = validateObjectId(userId)
+    if(!validatedUser) throw new customErrors("Invalid User Id", 400); 
+    return await proyectModel.find({user: userId}).populate({path: "user", select: "-_id"})
+  } , 
+  
 };
 
 export default proyectServices;
