@@ -14,7 +14,7 @@ const taskServices = {
 
   async getOneById(id) {
     try {
-      let task = await taskModel.findById({ id });
+      let task = await taskModel.findById({ _id: id });
       if (!task) throw new Error(`The Id does not match`);
       return proyect;
     } catch (error) {
@@ -54,10 +54,11 @@ const taskServices = {
     }
   },
 
-async getById (proyectId){
+
+async getByUserId (proyectId){
   const validated = validateObjectId(proyectId)
   if(!validated) throw new customError("invalid Id", 400);
-  return await taskModel.findById(proyectId).populate({path: "proyect", select: "-_id"}) 
+  return await taskModel.find({proyects: proyectId}).populate({path: "user", select: "-_id"}) 
 
 },
 
@@ -67,7 +68,7 @@ async getById (proyectId){
     try {
        const validated = validateObjectId(proyectId)
        if(!validated) throw new customError("invalid Id");
-        return await taskModel.find({ proyect: proyectId });
+        return await taskModel.find({proyects: proyectId});
         
     } catch (error) {
         throw new customError(error.message, 400);

@@ -27,9 +27,10 @@ const taskController = {
     httpResponse(res, 200, task);
   },
 
-  async getById(id){ //desde relaciones
-    const getProyectById = req.params.proyect;
-    const proyect = await taskServices.getById(getProyectById);
+  async getByUserId(req, res){ //desde relaciones  NO ES USER ES PROYECT 
+    const proyectId = req.params.id;
+    const proyect = await taskServices.getByUserId(proyectId );
+    if (!proyect) throw new customError("no tasks found", 404);
    
     httpResponse(res, 200, proyect);
 
@@ -50,6 +51,6 @@ export default {
   createOneTask: catched(taskController.createOneTask),
   deleteOneTask: catched(taskController.deleteOneTask),
   updateOneTask: catched(taskController.updateOneTask),
-  getById: catched(taskController.getById),
+  getByUserId: catched(taskController.getByUserId),
   getByProyect: catched(taskController.getByProyect),
 };
