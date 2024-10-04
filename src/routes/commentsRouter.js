@@ -10,5 +10,7 @@ commentsRouter.get("/:id", commentController.getOneById)
 commentsRouter.post("/", validator (commentSchema),commentController.createOneComment)
 commentsRouter.put("/:id", commentController.updateOneComment) 
 commentsRouter.delete("/:id", commentController.deleteOneComment)
+commentsRouter.get("/three/:id", commentController.getByProyectId)
+commentsRouter.get("/proyect", commentController.getByProyect)
 
 export default commentsRouter 

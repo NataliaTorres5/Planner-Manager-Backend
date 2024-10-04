@@ -1,10 +1,9 @@
 import joi from "joi";
 
-
-
-const commentSchema = joi.object({
+const commentSchema = joi
+.object({
     user: joi.string().required(),
-    title: joi.string().required(),
+    date: joi.date(),
     text: joi.string().required(),
     proyects: joi.string().required(),
 

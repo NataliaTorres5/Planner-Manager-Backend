@@ -2,8 +2,8 @@
 import { model, Schema, Types } from "mongoose";
 
 const  commentSchema = new Schema({
-    user: [{ type: Schema.Types.ObjectId, ref: 'user' }],
-    title: { type: String},
+    user: { type: Schema.Types.ObjectId, ref: 'user' },
+    date: {type: Date, default: Date.now},
     text: { type: String, required: true },
     proyects: { type: Types.ObjectId, ref: 'proyect' }
 
