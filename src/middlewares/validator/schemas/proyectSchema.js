@@ -7,6 +7,8 @@ const proyectSchema = joi
     name: joi.string().required(),
     description: joi.string().required(),
     user: joi.string().required(),
+    status: joi.string(),
+    priority: joi.string()
   })
   .messages({
     "any.required": "{#label} is required.",
