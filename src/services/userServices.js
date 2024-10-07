@@ -15,7 +15,15 @@ const userServices = {
    },
 
     async getByEmail (data) {
-        return await userModel.findOne({ email: data.email })
+        try {
+            console.log(data, "data")
+            return await userModel.findOne({ email:data})
+            
+        } catch (error) {
+            console.log(error, "error catch")
+            
+        }
+      
     },
 
     async deleteUser(id){
