@@ -13,15 +13,20 @@ const taskController = {
     httpResponse(res, 200, task);
   },
   async createOneTask(req, res) {
+    console.log("new Task",req.body)
     let newTask = await taskServices.createOneTask(req.body);
+    console.log(newTask);
     httpResponse(res, 200, newTask);
+
   },
   async deleteOneTask(req, res) {
-    let task = await taskServices.deleteOneTask(req.param.id);
+    console.log(req.params.id)
+    let task = await taskServices.deleteOneTask(req.params.id);
     httpResponse(res, 200, task);
   },
+
   async updateOneTask(req, res) {
-    let task = await taskServices.updateOneTask(req.param.id, req.body, {
+    let task = await taskServices.updateOneTask(req.params.id, req.body, {
       new: true,
     });
     httpResponse(res, 200, task);
