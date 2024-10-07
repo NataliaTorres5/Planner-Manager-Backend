@@ -7,7 +7,7 @@ const  taskSchema = new Schema({
     title: { type: String},
     text: { type: String, required: true },
     proyects: { type: Types.ObjectId, ref: 'proyect' },
-    status: { type: String, enum: ['pending', 'in progress', 'completed',], default: 'pending' },
+    status: { type: String, enum: ['pending', 'in_progress', 'completed',], default: 'pending' },
     priority: { type: String, enum: ['normal', 'important', "low"], default: 'normal' },
 
 
