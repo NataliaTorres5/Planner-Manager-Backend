@@ -18,6 +18,7 @@ const proyectServices = {
   },
 
   async deleteOneProyect(id) {
+    console.log(id)
     let proyect = await proyectModel.findByIdAndDelete({ _id: id });
     return proyect;
   },
@@ -38,10 +39,14 @@ const proyectServices = {
   },
 
   async getbyUserId(userId) {
+    console.log(userId)
+    
     const validatedUser = validateObjectId(userId)
     if(!validatedUser) throw new customErrors("Invalid User Id", 400); 
+
     return await proyectModel.find({user: userId}).populate({path: "user", select: "-_id"})
   } , 
+
   
 };
 
