@@ -6,8 +6,10 @@ const taskSchema = joi
     date: joi.date(),
     title: joi.string().required(),
     text: joi.string().required(),
+    status: joi.string(),
     user: joi.string().required(),
     proyects: joi.string().required(),
+    priority: joi.string()
   })
   .messages({
     "string.alphanum":
