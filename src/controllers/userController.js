@@ -10,74 +10,33 @@ import { get } from "mongoose";
 dotenv.config();
 
 const userController = {
-  /*async getAllUsers(req, res, next) {
-    try {
-      let allUsers = await userServices.getAllUsers();
-      res.status(200).json({ allUsers });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
-  },
-  async getOneUserByID(req, res) {
-    try {
-      let user = await userServices.getOneUserByID(req.params.id);
-      res.status(200).json({ user });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
-  },
 
-  async getOneUserByName(req, res) {
-    try {
-      res.status(200).json({ user });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
-  },
-  async updateUser(req, res, next) {
-    try {
-      let updatedUser = await userServices.updateUser(
-        { _id: req.params.id },
-        req.body,
-        { new: true }
-      );
-      res.status(200).json({ updatedUser });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
-  },
-  async deleteUser(req, res) {
-    try {
-      let user = await userServices.deleteUser(req.params.id);
-      res.status(200).json({ user });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
-  },
-  async createOneUser(req, res) {
-    console.log(req.body);
-    try {
-      let user = await userServices.createOneUser(req.body);
-      res.status(201).json({ user });
-    } catch (error) {
-      res.status(400).json({ error });
-    }
-  },
-  */
   async signInUser(req, res) { //inicio sesion
   
       const data = req.body;
-      const emailInUse = await userServices.getByEmail({ email: data.email });
+      console.log(data)
+      const emailInUse = await userServices.getByEmail( data.email);
       if (!emailInUse) throw new customError(`Email or password is not correct`, 400);
       const validPassword = userServices.checkPassword(data.password, emailInUse.password);
       if (!validPassword) throw new customError(`Email or password is not correct`, 409);
-      const token = jwt.sign({email:userServices.email}, process.env.SECRET_KEY,{expiresIn:'2h'} );
+      const token = jwt.sign({email:emailInUse.email}, process.env.SECRET_KEY,{expiresIn:'2h'} );
       const userResponse = userDTO(emailInUse, token);
       console.log(userResponse)
       httpResponse(res, 200, userResponse)
   
 
   },
+
+  async signInwithToken(req,res){
+    const authHeader = req.headers["authorization"];
+    if(!authHeader) throw new customError ("token no fue dado", 400); 
+
+    const token = authHeader.split(" ")[1];
+    const userResponse = userDTO(req.user, token);
+   console.log(req.user)
+    httpResponse(res, 200, userResponse , "User created")
+  },
+
 
   async registroUsuario(req, res) { //registro
       const data = req.body;
@@ -89,12 +48,6 @@ const userController = {
       httpResponse(res, 200, userResponse, "User created")
   },
 
-  async signInwithToken(req,res){
-    console.log(signInwithToken)
-    const token = req.headers.authorization.split(" ")[1];
-    const userResponse = userDTO(req, token)
-    httpResponse(res, 200, userResponse, "User created")
-  },
 
   async LogOutUser(req, res) {
 
@@ -123,7 +76,8 @@ async getByUserEmail(req, res){
 },
 
 async deleteUser(req, res){
-  let deletedUser = await userServices.deleteUser(req.params.id)
+  let deletedUser = await userServices.deleteUser(req.params.id);
+  if(!deletedUser) throw new Error("no user to delete")
   httpResponse(res, 201, deletedUser, "User deleted successfully" )
 },
 
