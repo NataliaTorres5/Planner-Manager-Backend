@@ -1,6 +1,10 @@
 import proyectServices from "../services/proyectServices.js";
 import catched from "../utils/catched.js";
+import customError from "../utils/customError.js";
 import httpResponse from "../utils/httpResponse.js";
+import userDTO from "../DTO/userDTO.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 const proyectController = {
   async getAllProyects(req, res) {
@@ -12,19 +16,21 @@ const proyectController = {
     httpResponse(res, 200, proyect);
   },
   async createOneProyect(req, res) {
-    console.log(req.body);
+    console.log("new proyect data" ,req.body);
     let newProyect = await proyectServices.createOneProyect(req.body);
     console.log(newProyect);
     httpResponse(res, 200, newProyect);
   },
   
   async deleteOneProyect(req, res) {
-    let proyect = await proyectServices.deleteOneProyect(req.param.id);
+    console.log(req.params.id)
+    let proyect = await proyectServices.deleteOneProyect(req.params.id);
     httpResponse(res, 200, proyect);
+
   },
   async updateOneProyect(req, res) {
     let proyect = await proyectServices.updateOneProyect(
-      req.param.id,
+      req.params.id,
       req.body,
       { new: true }
     );
@@ -34,7 +40,7 @@ const proyectController = {
   
 
   async getByUser(req, res) {
-    const userOwner = req.params.user;
+    const userOwner = req.params.id;
     const proyect = await proyectServices.getByUser(userOwner);
     httpResponse(res, 200, proyect);
 
@@ -52,7 +58,8 @@ const proyectController = {
     const userId = await proyectServices.getbyUserId(userID); 
     if (!userId ) throw new customError("this user has no proyects", 400);
     httpResponse(res, 200, userId); 
-  }
+  },
+
 };
 
 export default {
@@ -62,4 +69,5 @@ export default {
   deleteOneProyect: catched(proyectController.deleteOneProyect),
   updateOneProyect: catched(proyectController.updateOneProyect),
   getByUserId: catched(proyectController.getByUserId),
+
 };
