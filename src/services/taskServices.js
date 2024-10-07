@@ -34,8 +34,9 @@ const taskServices = {
   },
 
   async deleteOneTask(id) {
+    console.log(id)
     try {
-      let task = await taskModel.findByIdAndDelete({ id });
+      let task = await taskModel.findByIdAndDelete({ _id:id});
       if (!task) throw new Error(`couldn't find the task,  we couldn't delete`);
       return task;
     } catch (error) {
@@ -49,6 +50,7 @@ const taskServices = {
         new: newTrue,
       });
       if (!task) throw new error(`Could't find the task, we couldn't update`);
+      return task
     } catch (error) {
         throw new customError(error.message, 400);
     }
